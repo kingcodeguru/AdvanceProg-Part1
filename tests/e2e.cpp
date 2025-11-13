@@ -23,12 +23,28 @@ pair<int, string> getOutput(int argc, char *argv[], string input) {
 }
 
 TEST(AdditionTest, PositiveNumbers) {
-    auto actual = getOutput(1, ["."], "");
-    int exit_status = actual.first;
-    string actual_output = actual.second;
+    pair<int, string> actual; int exit_status; string actual_output;
+    // ------------ TEST 1 ------------
+    actual = getOutput(1, ["test1"], "");
+    exit_status = actual.first;
+    actual_output = actual.second;
 
     EXPECT_EQ(exit_status, 0);
-    EXPECT_EQ(actual_output, "");
+    EXPECT_EQ(actual_output, ""); // empty input - empty output
+    // ------------ TEST 2 ------------
+    actual = getOutput(1, ["test2"], "add file1 hello world!\nget file1");
+    exit_status = actual.first;
+    actual_output = actual.second;
+
+    EXPECT_EQ(exit_status, 0);
+    EXPECT_EQ(actual_output, "hello world!"); // checking if add and get works properly.
+    // ------------ TEST 3 ------------
+    actual = getOutput(1, ["test3"], "get file");
+    exit_status = actual.first;
+    actual_output = actual.second;
+
+    EXPECT_EQ(exit_status, 0);
+    EXPECT_EQ(actual_output, ""); // checks if not crashing and not displaying error message when tying to receive an non-existing file.
 }
 
 int main(int argc, char **argv) {
