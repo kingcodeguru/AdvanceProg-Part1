@@ -4,7 +4,11 @@
 
 using namespace usd;
 
+// receive command line arguments and input string.
+// returns exist status and whole program output.
 pair<int, string> getOutput(int argc, char *argv[], string input) {
+    // We need to redirect the input and output stream so it will be to and from strings and not to and from the screen.
+    // To do this, we will use 'stringstream'.
     // 1. Save original buffer
     streambuf* old_buf_o = cout.rdbuf();
     streambuf* old_buf_i =  cin.rdbuf();
@@ -14,12 +18,14 @@ pair<int, string> getOutput(int argc, char *argv[], string input) {
     cout.rdbuf(ss_o.rdbuf());
     cin.rdbuf(ss_i.rdbuf());
 
-    int ret = initializeAndRun(argc, argv);
+    // We want the command 'exit' to exit the program so that for the tests - the process will not be infinite.
+    input += "exit\n";
+    int ret = initializeAndRun(argc, argv, true);
 
     // 3. Restore original buffer
     cout.rdbuf(old_buf_o);
     cin.rdbuf(old_buf_i);
-    return {ret, ss_o.str};
+    return {ret, ss_o.str}; // returning exist status and program output
 }
 
 TEST(AdditionTest, PositiveNumbers) {

@@ -8,4 +8,4 @@ public:
     App(map<string, ICommand*> commands);
     void run();
 }
-int initializeAndRun(int argc, char *argv[]);
+int initializeAndRun(int argc, char *argv[], bool is_exitable=false);
