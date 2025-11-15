@@ -28,7 +28,7 @@ pair<int, string> getOutput(int argc, char *argv[], string input) {
     return {ret, ss_o.str}; // returning exist status and program output
 }
 
-TEST(AdditionTest, PositiveNumbers) {
+TEST(End2EndTests, Commands) {
     pair<int, string> actual; int exit_status; string actual_output;
     // ------------ TEST 1 ------------
     actual = getOutput(1, ["test1"], "\n");
@@ -64,6 +64,11 @@ TEST(AdditionTest, PositiveNumbers) {
 
     EXPECT_EQ(exit_status, 0);
     EXPECT_EQ(actual_output, "file1\nfile2\n\nfile4\n"); // test search function
+}
+
+
+TEST(End2EndTests, EdgeCases) {
+    pair<int, string> actual; int exit_status; string actual_output;
     // ------------ TEST 5 ------------
     actual = getOutput(1, ["test5"], ""
         "add file1 text1\n"
@@ -102,6 +107,7 @@ TEST(AdditionTest, PositiveNumbers) {
     EXPECT_EQ(actual_output, "aaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
     // test if works on >= 10 chars and on >= 100 chars (because of compression method).
 }
+
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
