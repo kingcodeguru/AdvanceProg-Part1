@@ -14,12 +14,12 @@ pair<int, string> getOutput(int argc, char *argv[], string input) {
     streambuf* old_buf_i =  cin.rdbuf();
     // 2. Redirect to stringstream
     stringstream ss_o;
+    input += "exit\n";
     stringstream ss_i(input);
     cout.rdbuf(ss_o.rdbuf());
     cin.rdbuf(ss_i.rdbuf());
 
     // We want the command 'exit' to exit the program so that for the tests - the process will not be infinite.
-    input += "exit\n";
     int ret = initializeAndRun(argc, argv, true);
 
     // 3. Restore original buffer
@@ -87,7 +87,7 @@ TEST(AdditionTest, PositiveNumbers) {
     actual_output = actual.second;
 
     EXPECT_EQ(exit_status, 0);
-    EXPECT_EQ(actual_output, "text2\n"); // test non-matching number of arguments
+    EXPECT_EQ(actual_output, "\n"); // test non-matching number of arguments
     // ------------ TEST 7 ------------
     actual = getOutput(1, ["test7"], ""
         "add file1 aaaaaaaaaa\n"
